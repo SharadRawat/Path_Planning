@@ -20,7 +20,8 @@ The max speed is within the max 50 mph. This was enforced by keeping all the vel
 
 In lines between 255 to 299, the positions of all other vehicles are analyzed relative to the 'ego' vehicle. The boolean too_close is changed to true if the two vehicles are within 30m of each other. Similarly, vehicles from neighbouring lanes are also scanned, if the vehicles are close (within the margin), `car_left` and `car_right` are changed to true.
 
-`// Lane identifiers for other cars
+```
+// Lane identifiers for other cars
 			bool too_close = false;
 			bool car_left = false;
 			bool car_right = false;
@@ -60,7 +61,8 @@ In lines between 255 to 299, the positions of all other vehicles are analyzed re
 					// Another car is to the left
 					car_left |= ((car_s - gap) < check_car_s) && ((car_s + gap) > check_car_s);
 				}
-			}`
+			}
+```
 
 
 In line 302 to 331, logic for action has been encoded on how to change speed and how to change lanes.
@@ -73,7 +75,8 @@ C) The car will move back to the center lane when it becomes clear.
 
 
 
-`double acc = 0.224;
+````
+double acc = 0.224;
 			double max_speed = 49.5;
 			if (too_close) {
 				// A car is ahead
@@ -101,13 +104,13 @@ C) The car will move back to the center lane when it becomes clear.
 					ref_vel += acc;
 				}
 			}
-`
+```
 
 The trajectory is generated in the lines from 332 to 436. Here, previous 2 points are also appended in the next set of points to reduce the jerk due to sudden change in the direction. `3` evenly spaced points are generated at 30m, 60m, and 90m. A rotation and translation transformation is also applied to change the coordinate system from global to local (car's). 
 
 From lines 395 to 435, the spline is used to compute the points for the trajectory.
 
-`
+```
   vector<double> ptsx;
 			vector<double> ptsy;
 			// Reference x, y, yaw states
@@ -189,4 +192,4 @@ From lines 395 to 435, the spline is used to compute the points for the trajecto
 				next_x_vals.push_back(x_point);
 				next_y_vals.push_back(y_point);
 			}
-`
+```
